@@ -1,0 +1,247 @@
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1   
+   2   
+   3  *************************************************************************
+   4  ***      Ejercicio 3 Laboratorio 1                                    ***
+   5  *************************************************************************
+   6   
+   7  Sets
+   8      i iterador origenes  /o1,o2,o3/
+   9      j iterador destinos  /d1,d2,d3,d4/;
+  10   
+  11  Variables
+  12      x(i,j) cantidad de procesos que van del nodo i al j
+  13      z      costo total a minimizar
+  14   
+  15  Parameters
+  16      oferta(i)  /o1 300,o2 500,o3 200/
+  17      demanda(j) /d1 200,d2 300,d3 100,d4 400/;
+  18   
+  19  Table costo(i,j)
+  20           d1      d2      d3      d4
+  21  o1       8       6       10      9
+  22  o2       9       12      13      7
+  23  o3       14      9       16      5;
+  24   
+  25  Positive variable x;
+  26   
+  27  Equations
+  28  objectiveFunction        costo total del transporte
+  29  restriOferta(i)          restricci�n que desocupa cada procesador
+  30  restriDemanda(j)         restricci�n que llena completamente cada procesador
+  31  ;
+  32   
+  33  objectiveFunction ..       z =e= sum((i,j), costo(i,j)* x(i,j));
+  34  restriOferta(i)   ..       sum(j, x(i,j)) =l= oferta(i) ;
+  35  restriDemanda(j)  ..       sum(i, x(i,j)) =g= demanda(j) ;
+  36   
+  37  Model modell /all/;
+  38  Option mip=CPLEX
+  39  Solve modell using mip minimzing z;
+  40   
+  41  Display z.l;
+  42  Display x.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  41.5.0 2a5a4ddc WEX-WEI
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE modell Using MIP From line 39
+
+
+---- objectiveFunction  =E=  costo total del transporte
+
+objectiveFunction..  - 8*x(o1,d1) - 6*x(o1,d2) - 10*x(o1,d3) - 9*x(o1,d4) - 9*x(o2,d1) - 12*x(o2,d2) - 13*x(o2,d3) - 7*x(o2,d4) - 14*x(o3,d1) - 9*x(o3,d2) - 16*x(o3,d3) - 5*x(o3,d4) + z =E= 0 ; (LHS = 0)
+     
+
+---- restriOferta  =L=  restricci�n que desocupa cada procesador
+
+restriOferta(o1)..  x(o1,d1) + x(o1,d2) + x(o1,d3) + x(o1,d4) =L= 300 ; (LHS = 0)
+     
+restriOferta(o2)..  x(o2,d1) + x(o2,d2) + x(o2,d3) + x(o2,d4) =L= 500 ; (LHS = 0)
+     
+restriOferta(o3)..  x(o3,d1) + x(o3,d2) + x(o3,d3) + x(o3,d4) =L= 200 ; (LHS = 0)
+     
+
+---- restriDemanda  =G=  restricci�n que llena completamente cada procesador
+
+restriDemanda(d1)..  x(o1,d1) + x(o2,d1) + x(o3,d1) =G= 200 ; (LHS = 0, INFES = 200 ****)
+     
+restriDemanda(d2)..  x(o1,d2) + x(o2,d2) + x(o3,d2) =G= 300 ; (LHS = 0, INFES = 300 ****)
+     
+restriDemanda(d3)..  x(o1,d3) + x(o2,d3) + x(o3,d3) =G= 100 ; (LHS = 0, INFES = 100 ****)
+     
+REMAINING ENTRY SKIPPED
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE modell Using MIP From line 39
+
+
+---- x  cantidad de procesos que van del nodo i al j
+
+x(o1,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -8       objectiveFunction
+        1       restriOferta(o1)
+        1       restriDemanda(d1)
+
+x(o1,d2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -6       objectiveFunction
+        1       restriOferta(o1)
+        1       restriDemanda(d2)
+
+x(o1,d3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -10       objectiveFunction
+        1       restriOferta(o1)
+        1       restriDemanda(d3)
+
+REMAINING 9 ENTRIES SKIPPED
+
+---- z  costo total a minimizar
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       objectiveFunction
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE modell Using MIP From line 39
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+02, 5.000E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.600E+01]
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE modell Using MIP From line 39
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            8
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            37
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE modell Using MIP From line 39
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   modell              OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  39
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             7300.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         7    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:         7300.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU objective~          .              .              .             1.0000      
+
+  objectiveFunction  costo total del transporte
+
+---- EQU restriOferta  restricci�n que desocupa cada procesador
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+o1        -INF          300.0000       300.0000        -3.0000      
+o2        -INF          500.0000       500.0000          .          
+o3        -INF          200.0000       200.0000        -2.0000      
+
+---- EQU restriDemanda  restricci�n que llena completamente cada procesador
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+d1       200.0000       200.0000        +INF            9.0000      
+d2       300.0000       300.0000        +INF            9.0000      
+d3       100.0000       100.0000        +INF           13.0000      
+d4       400.0000       400.0000        +INF            7.0000      
+
+---- VAR x  cantidad de procesos que van del nodo i al j
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+o1.d1          .              .            +INF            2.0000      
+o1.d2          .           300.0000        +INF             .          
+o1.d3          .              .            +INF             .          
+o1.d4          .              .            +INF            5.0000      
+o2.d1          .           200.0000        +INF             .          
+o2.d2          .              .            +INF            3.0000      
+o2.d3          .           100.0000        +INF             .          
+o2.d4          .           200.0000        +INF             .          
+o3.d1          .              .            +INF            7.0000      
+o3.d2          .              .            +INF            2.0000      
+o3.d3          .              .            +INF            5.0000      
+o3.d4          .           200.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF         7300.0000        +INF             .          
+
+  z  costo total a minimizar
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:34:56 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     41 VARIABLE z.L                   =     7300.000  costo total a minimizar
+
+----     42 VARIABLE x.L  cantidad de procesos que van del nodo i al j
+
+            d1          d2          d3          d4
+
+o1                 300.000
+o2     200.000                 100.000     200.000
+o3                                         200.000
+
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+
+
+USER: GAMS Demo license for William Mendez           G230124|0002CO-GEN
+      Universidad de los Andes, Colombia                       DL083586
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\Punto3_L1.gms
+Output     C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\Punto3_L1.lst

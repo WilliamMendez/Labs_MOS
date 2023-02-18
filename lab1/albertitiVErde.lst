@@ -1,0 +1,253 @@
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  SETS
+   2      i   Sources
+   3          / S1, S2, S3 /
+   4      j   Destinations
+   5          / D1, D2, D3, D4, D5 / ;
+   6   
+   7  PARAMETERS
+   8      a(i)    Capacity of sources
+   9              / S1 150, S2 200, S3 250 /
+  10      b(j)    Demand of destinations
+  11              / D1 100, D2 150, D3 75, D4 200, D5 125 /
+  12      c(i,j)  Cost of transportation per unit
+  13              / S1.D1 4, S1.D2 5, S1.D3 6, S1.D4 8, S1.D5 10,
+  14                S2.D1 6, S2.D2 4, S2.D3 7, S2.D4 9, S2.D5 8,
+  15                S3.D1 3, S3.D2 5, S3.D3 9, S3.D4 11, S3.D5 7 /;
+  16   
+  17  VARIABLES
+  18      x(i,j)  Amount shipped from sources to destinations
+  19      z;
+  20   
+  21  POSITIVE VARIABLES x ;
+  22   
+  23  EQUATIONS
+  24      supply(i)       Limit on the amount produced at each source
+  25      demand(j)       Limit on the amount consumed at each destination
+  26      obj             Objective function ;
+  27   
+  28  supply(i) ..       sum(j, x(i,j)) =l= a(i) ;
+  29  demand(j) ..       sum(i, x(i,j)) =g= b(j) ;
+  30  obj ..             sum((i,j), c(i,j)*x(i,j)) =e=z;
+  31   
+  32  MODEL transportation /all/ ;
+  33   
+  34  OPTION LP = CPLEX ;
+  35  TRANSPORTATION.OPTFILE = 1 ;
+  36  OPTION LP = CPLEX ;
+  37   
+  38  SOLVE transportation USING LP MINIMIZING z ;
+  39   
+  40  DISPLAY x.l, z.l ;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  41.5.0 2a5a4ddc WEX-WEI
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE transportation Using LP From line 38
+
+
+---- supply  =L=  Limit on the amount produced at each source
+
+supply(S1)..  x(S1,D1) + x(S1,D2) + x(S1,D3) + x(S1,D4) + x(S1,D5) =L= 150 ; (LHS = 0)
+     
+supply(S2)..  x(S2,D1) + x(S2,D2) + x(S2,D3) + x(S2,D4) + x(S2,D5) =L= 200 ; (LHS = 0)
+     
+supply(S3)..  x(S3,D1) + x(S3,D2) + x(S3,D3) + x(S3,D4) + x(S3,D5) =L= 250 ; (LHS = 0)
+     
+
+---- demand  =G=  Limit on the amount consumed at each destination
+
+demand(D1)..  x(S1,D1) + x(S2,D1) + x(S3,D1) =G= 100 ; (LHS = 0, INFES = 100 ****)
+     
+demand(D2)..  x(S1,D2) + x(S2,D2) + x(S3,D2) =G= 150 ; (LHS = 0, INFES = 150 ****)
+     
+demand(D3)..  x(S1,D3) + x(S2,D3) + x(S3,D3) =G= 75 ; (LHS = 0, INFES = 75 ****)
+     
+REMAINING 2 ENTRIES SKIPPED
+
+
+---- obj  =E=  Objective function
+
+obj..  4*x(S1,D1) + 5*x(S1,D2) + 6*x(S1,D3) + 8*x(S1,D4) + 10*x(S1,D5) + 6*x(S2,D1) + 4*x(S2,D2) + 7*x(S2,D3) + 9*x(S2,D4) + 8*x(S2,D5) + 3*x(S3,D1) + 5*x(S3,D2) + 9*x(S3,D3) + 11*x(S3,D4) + 7*x(S3,D5) - z =E= 0 ; (LHS = 0)
+     
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE transportation Using LP From line 38
+
+
+---- x  Amount shipped from sources to destinations
+
+x(S1,D1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       supply(S1)
+        1       demand(D1)
+        4       obj
+
+x(S1,D2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       supply(S1)
+        1       demand(D2)
+        5       obj
+
+x(S1,D3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       supply(S1)
+        1       demand(D3)
+        6       obj
+
+REMAINING 12 ENTRIES SKIPPED
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       -1       obj
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE transportation Using LP From line 38
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 7.500E+01, 2.500E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.100E+01]
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE transportation Using LP From line 38
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           16
+NON ZERO ELEMENTS            46
+
+
+GENERATION TIME      =        0.031 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE transportation Using LP From line 38
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   transportation      OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  38
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE             4025.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         8    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+
+*** Error Cannot open parameter file "C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\cplex.opt"
+*** Error Error code = 2; No such file or directory
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.0.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Model has been proven infeasible
+
+
+---- EQU supply  Limit on the amount produced at each source
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+S1        -INF          150.0000       150.0000        -2.0000      
+S2        -INF          200.0000       200.0000        -1.0000      
+S3        -INF          300.0000       250.0000          .     INFES
+
+---- EQU demand  Limit on the amount consumed at each destination
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+D1       100.0000       100.0000        +INF            3.0000      
+D2       150.0000       150.0000        +INF            5.0000      
+D3        75.0000        75.0000        +INF            8.0000      
+D4       200.0000       200.0000        +INF           10.0000      
+D5       125.0000       125.0000        +INF            7.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .            -1.0000      
+
+  obj  Objective function
+
+---- VAR x  Amount shipped from sources to destinations
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+S1.D1          .              .            +INF            3.0000      
+S1.D2          .              .            +INF            2.0000      
+S1.D3          .              .            +INF            EPS         
+S1.D4          .           150.0000        +INF             .          
+S1.D5          .              .            +INF            5.0000      
+S2.D1          .              .            +INF            4.0000      
+S2.D2          .            75.0000        +INF             .          
+S2.D3          .            75.0000        +INF             .          
+S2.D4          .            50.0000        +INF             .          
+S2.D5          .              .            +INF            2.0000      
+S3.D1          .           100.0000        +INF             .          
+S3.D2          .            75.0000        +INF             .          
+S3.D3          .              .            +INF            1.0000      
+S3.D4          .              .            +INF            1.0000      
+S3.D5          .           125.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF         4025.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             1 INFEASIBLE (INFES)
+                    SUM         50.0000
+                    MAX         50.0000
+                    MEAN        50.0000
+                             0  UNBOUNDED
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 14:30:21 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     40 VARIABLE x.L  Amount shipped from sources to destinations
+
+            D1          D2          D3          D4          D5
+
+S1                                         150.000
+S2                  75.000      75.000      50.000
+S3     100.000      75.000                             125.000
+
+
+----     40 VARIABLE z.L                   =     4025.000  
+
+
+EXECUTION TIME       =        0.218 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+
+
+USER: GAMS Demo license for William Mendez           G230124|0002CO-GEN
+      Universidad de los Andes, Colombia                       DL083586
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+Output     C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.lst

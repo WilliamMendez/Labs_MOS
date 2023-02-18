@@ -1,0 +1,19 @@
+B 3 C o m p i l a t i o n
+B 51 Equation Listing    SOLVE transportation Using LP From line 38
+D 54 supply
+D 63 demand
+D 74 obj
+B 80 Column Listing      SOLVE transportation Using LP From line 38
+E 83 x
+E 105 z
+B 113 Range Statistics    SOLVE transportation Using LP From line 38
+B 124 Model Statistics    SOLVE transportation Using LP From line 38
+B 137 Solution Report     SOLVE transportation Using LP From line 38
+F 171 supply
+F 179 demand
+F 191 obj
+G 195 x
+G 217 z
+B 228 E x e c u t i o n
+I 228 x
+I 239 z

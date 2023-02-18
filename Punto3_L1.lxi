@@ -1,0 +1,19 @@
+B 3 C o m p i l a t i o n
+B 53 Equation Listing    SOLVE modell Using MIP From line 39
+D 56 objectiveFunction
+D 61 restriOferta
+D 70 restriDemanda
+B 82 Column Listing      SOLVE modell Using MIP From line 39
+E 85 x
+E 107 z
+B 115 Range Statistics    SOLVE modell Using MIP From line 39
+B 126 Model Statistics    SOLVE modell Using MIP From line 39
+B 139 Solution Report     SOLVE modell Using MIP From line 39
+F 172 objectiveFunction
+F 176 restriOferta
+F 184 restriDemanda
+G 193 x
+G 212 z
+B 222 E x e c u t i o n
+I 224 z
+I 225 x

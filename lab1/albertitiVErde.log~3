@@ -1,0 +1,72 @@
+--- Job albertitiVErde.gms Start 02/18/23 14:29:23 41.5.0 2a5a4ddc WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\41\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input "C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms"
+    PageSize 0
+    ScrDir "C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\225a\"
+    SysDir C:\GAMS\41\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: GAMS Demo license for William Mendez           G230124|0002CO-GEN
+          Universidad de los Andes, Colombia                       DL083586
+          C:\GAMS\41\gamslice.txt
+          w.mendez@uniandes.edu.co, William Mendez                         
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 41.5.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- albertitiVErde.gms(29) 3 Mb 1 Error
+*** Error  37 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    '=l=' or '=e=' or '=g=' operator expected
+--- albertitiVErde.gms(35) 3 Mb 4 Errors
+*** Error 271 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Illegal type (not set, parameter, variable or equation)
+*** Error   0 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Integer number expected
+*** Error 273 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Display format specification must have 1 or 3 sub-fields
+    Required format is :-
+     option "symbol":decimals:rows:columns;
+     -or- option "symbol":decimals;
+     decimals: in range 0..8  (ignored for a set)
+     rows:     0  forces display into list format
+       -or-    1..(dimension-1)  number of labels on each row
+     columns:  max number of columns across page if row spec is 0
+       -or-    1..(dimension-rows)  number of labels each column
+--- albertitiVErde.gms(37) 3 Mb 6 Errors
+*** Error 243 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Objective is not a variable
+*** Error 257 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Solve statement not checked because of previous errors
+--- albertitiVErde.gms(39) 3 Mb 9 Errors
+*** Error 141 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+*** Error 112 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Wrong suffix on equation reference - allowable are
+       l        level (activity)
+       m        marginal (reduced cost)
+       lo       lower bound
+       up       upper bound
+       scale    equation scale
+       slacklo  slack from lower bound
+       slackup  slack from upper bound
+       slack    min(slacklo, slackup)
+       infeas   infeasibility
+       range    difference between lower and upper bound
+*** Error 141 in C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\labs\Labs_MOS\lab1\albertitiVErde.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- albertitiVErde.gms(39) 3 Mb 9 Errors
+*** Status: Compilation error(s)
+--- Job albertitiVErde.gms Stop 02/18/23 14:29:23 elapsed 0:00:00.014

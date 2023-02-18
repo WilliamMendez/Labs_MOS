@@ -1,0 +1,19 @@
+B 3 C o m p i l a t i o n
+B 51 Equation Listing    SOLVE modell Using MIP From line 37
+D 54 objectiveFunction
+D 59 restriUnaPorCadaEmpleado
+D 70 restriUnaPorCadaTrabajo
+B 82 Column Listing      SOLVE modell Using MIP From line 37
+E 85 x
+E 107 z
+B 115 Range Statistics    SOLVE modell Using MIP From line 37
+B 126 Model Statistics    SOLVE modell Using MIP From line 37
+B 139 Solution Report     SOLVE modell Using MIP From line 37
+F 183 objectiveFunction
+F 187 restriUnaPorCadaEmpleado
+F 196 restriUnaPorCadaTrabajo
+G 205 x
+G 228 z
+B 238 E x e c u t i o n
+I 240 z
+I 241 x
