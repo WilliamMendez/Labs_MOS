@@ -1,0 +1,140 @@
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 13:17:43 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *************************************************************************
+   2  ***      Ejercicio 3 Laboratorio 1                                    ***
+   3  *************************************************************************
+   4   
+   5  Sets
+   6      i iterador origenes  /o1,o2,o3/
+   7      j iterador destinos  /d1,d2,d3,d4/
+   8   
+   9  Variables
+  10      x(i,j) cantidad de procesos que van del nodo i al j
+  11      z      costo total a minimizar
+  12   
+  13  Parameters
+  14      oferta(i)  /o1 300,o2 500,o3 200/
+  15      demanda(j) /d1 200,d2 300,d3 100,d4 400/
+  16   
+  17  Table costo(i,j)
+  18           d1      d2      d3      d4
+  19  o1       8       6       10      9
+  20  o2       9       12      13      7
+  21  o3       14      9       16      5
+  22   
+  23  Integer variable x
+  24   
+  25  Equations
+  26  objectiveFunction        costo total del transporte
+  27  restriOferta(i)          restricci�n que desocupa cada procesador
+  28  restriDemanda(j)         restricci�n que llena completamente cada procesador
+  29  ;
+  30   
+  31  objectiveFunction                           ..    z =e= sum(i, sum(j, costo(i,j)* x(i,j)));
+  32  restriOferta(i)$(ord(i)>=1 and ord(i)<=3)   ..    sum(j, costo(i,j)) =e= oferta(i);
+  33  restriDemanda(j)$(ord(j)>=1 and ord(j)<=4)  ..    sum(i, costo(i,j)) =e= demanda(j);
+  34   
+  35  Model modell /all/;
+  36  Option mip=CPLEX
+  37  Solve modell using mip minimzing z;
+  38   
+  39  Display z.l;
+  40  Display x.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  41.5.0 2a5a4ddc WEX-WEI
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 13:17:43 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE modell Using MIP From line 37
+
+
+---- objectiveFunction  =E=  costo total del transporte
+
+objectiveFunction..  - 8*x(o1,d1) - 6*x(o1,d2) - 10*x(o1,d3) - 9*x(o1,d4) - 9*x(o2,d1) - 12*x(o2,d2) - 13*x(o2,d3) - 7*x(o2,d4) - 14*x(o3,d1) - 9*x(o3,d2) - 16*x(o3,d3) - 5*x(o3,d4) + z =E= 0 ; (LHS = 0)
+     
+**** Exec Error at line 32: Equation infeasible due to rhs value
+
+**** INFEASIBLE EQUATIONS ...
+
+---- restriOferta  =E=  restricci�n que desocupa cada procesador
+
+restriOferta(o1)..  0 =E= 267 ; (LHS = 0, INFES = 267 ****)
+     
+restriOferta(o2)..  0 =E= 459 ; (LHS = 0, INFES = 459 ****)
+     
+restriOferta(o3)..  0 =E= 156 ; (LHS = 0, INFES = 156 ****)
+     
+**** Exec Error at line 33: Equation infeasible due to rhs value
+
+**** INFEASIBLE EQUATIONS ...
+
+---- restriDemanda  =E=  restricci�n que llena completamente cada procesador
+
+restriDemanda(d1)..  0 =E= 169 ; (LHS = 0, INFES = 169 ****)
+     
+restriDemanda(d2)..  0 =E= 273 ; (LHS = 0, INFES = 273 ****)
+     
+restriDemanda(d3)..  0 =E= 61 ; (LHS = 0, INFES = 61 ****)
+     
+restriDemanda(d4)..  0 =E= 379 ; (LHS = 0, INFES = 379 ****)
+     
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 13:17:43 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE modell Using MIP From line 37
+
+
+---- x  cantidad de procesos que van del nodo i al j
+
+x(o1,d1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -8       objectiveFunction
+
+x(o1,d2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -6       objectiveFunction
+
+x(o1,d3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -10       objectiveFunction
+
+REMAINING 9 ENTRIES SKIPPED
+
+---- z  costo total a minimizar
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       objectiveFunction
+
+GAMS 41.5.0  2a5a4ddc Jan 3, 2023           WEX-WEI x86 64bit/MS Windows - 02/18/23 13:17:43 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE modell Using MIP From line 37
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            8
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            13
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+
+**** SOLVE from line 37 ABORTED, EXECERROR = 2
+
+
+EXECUTION TIME       =        0.000 SECONDS      4 MB  41.5.0 2a5a4ddc WEX-WEI
+
+
+USER: GAMS Demo license for William Mendez           G230124|0002CO-GEN
+      Universidad de los Andes, Colombia                       DL083586
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\Punto3_L1.gms
+Output     C:\Users\elpin\OneDrive - Universidad de los Andes\7mo_semestre\MOS\Punto3_L1.lst
+
+**** USER ERROR(S) ENCOUNTERED
