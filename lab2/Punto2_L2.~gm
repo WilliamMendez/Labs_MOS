@@ -38,7 +38,7 @@ equipoCompleto           ..       sum((i,j), x(i,j)) =e= 4;
 
 Model modell /all/;
 Option mip=CPLEX
-Solve modell using mip maximizing z;
+Solve modell using mip minimzing z;
 
 Display z.l;
 Display x.l;
