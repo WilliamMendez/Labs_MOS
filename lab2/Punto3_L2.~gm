@@ -1,0 +1,49 @@
+*************************************************************************
+***      Ejercicio 3 Laboratorio 2                                    ***
+*************************************************************************
+
+Sets
+    i torres  /1,2,3,4,5,6,7,8,9,10,11,12/
+;
+
+Alias (torres,i);
+Alias (torres,j);
+
+Variables
+    x(i)   Tabla que representa si se pone una antena en la zona i
+    z      cantidad de torres a minimizar
+
+Parameters
+
+Table relaciones(i,j)
+         1       2       3       4       5       6       7       8       9       10      11      12
+1        0       1       1       0       1       0       0       0       0       0       0       0
+2        1       0       0       0       1       0       0       0       0       0       0       0
+3        1       0       0       1       1       1       1       1       0       0       0       0
+4        0       0       1       0       1       1       0       0       0       0       1       0
+5        1       1       1       1       0       0       0       0       0       1       1       0
+6        0       0       1       1       0       0       0       1       0       0       1       0
+7        0       0       1       0       0       0       0       1       0       0       0       1
+8        0       0       1       0       0       1       1       0       1       0       1       1
+9        0       0       0       0       0       0       0       1       0       1       1       1
+10       0       0       0       0       1       1       0       0       1       0       1       0
+11       0       0       0       1       1       1       0       1       1       1       0       0
+12       0       0       0       0       0       0       1       1       1       0       0       0
+
+Binary variable x;
+
+Equations
+objectiveFunction        Cantidad total de torres
+unaPorZona(j)            Restriccion que asegura que exista una cobertura
+;
+
+objectiveFunction        ..       z =e=  sum((i), x(i));
+unaPorZona(j)            ..       sum(i, relaciones(i,j)*x(i)) =g= 1;
+
+
+Model modell /all/;
+Option mip=CPLEX
+Solve modell using mip minimizing z;
+
+Display z.l;
+Display x.l;
