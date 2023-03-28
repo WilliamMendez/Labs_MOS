@@ -62,5 +62,5 @@ Model modell /all/;
 Option mip=CPLEX;
 Solve modell using mip maximizing z;
 
-Display z.l;
+Display z;
 Display x.l;
