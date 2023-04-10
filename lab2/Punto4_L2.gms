@@ -46,11 +46,22 @@ Binary variable si_no;
 
 equations
     objetivo                funcion objetivo
+    source_node(i)          source node
+    destination_node(j)     destination node
+    intermediate_node       intermediate node;
 
 
 objetivo                                            .. costo_total =e= sum((i,j), d(i,j)*si_no(i,j));
+
+source_node(i)$(ord(i)=4)                           .. sum(j, si_no(i,j)) =e= 1;
+
+destination_node(j)$(ord(j)=6)                      .. sum(i, si_no(i,j)) =e= 1;
+
+intermediate_node(i)$(ord(i)<>4 and ord(i) ne 6)    .. sum(j, si_no(i,j)) - sum(j, si_no(j,i)) =e= 0;
 
 * Resolución del modelo
 Model modell /all/;
 Option mip=CPLEX
 Solve modell using mip minimzing costo_total;
+
+display si_no.l, costo_total.l;

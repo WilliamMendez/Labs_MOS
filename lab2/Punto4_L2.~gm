@@ -37,6 +37,11 @@ loop((i,j),
     )
 )
 
+variables
+    costo_total costo total de la ruta
+    si_no(i,j)  existe una conexión entre los nodos
+;
+
 Binary variable si_no;
 
 equations
