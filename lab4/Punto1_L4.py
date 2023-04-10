@@ -1,65 +1,52 @@
+"""
+*************************************************************************
+***      Ejercicio 1 Laboratorio 4                                    ***
+*************************************************************************
+"""
 
-from __future__ import division
 from pyomo.environ import *
-
-from pyomo.opt import SolverFactory
-
-import sys
-import os
-
-os.system("clear")
-
-#sys.exit("Stopped")
 
 Model = ConcreteModel()
 
 # SETS & PARAMETERS********************************************************************
-numNodes=5
+Model.i = {'o1', 'o2', 'o3'}
+Model.j = {'d1', 'd2'}
 
-N=RangeSet(1, numNodes)
+Model.ofertaKernel = Param(Model.i, initialize={'o1': 60, 'o2': 80, 'o3': 50})
 
-cost={(1,1):999, (1,2):5,   (1,3):2,   (1,4):999, (1,5):999,\
-      (2,1):999, (2,2):999, (2,3):999, (2,4):999, (2,5):8,\
-      (3,1):999, (3,2):999, (3,3):999, (3,4):3,   (3,5):999,\
-      (4,1):999, (4,2):999, (4,3):999, (4,4):999, (4,5):2,\
-      (5,1):999, (5,2):999, (5,3):999, (5,4):999, (5,5):999}
+Model.ofertaUsuario = Param(Model.i, initialize={'o1': 80, 'o2': 50, 'o3': 50})
 
+Model.demandaUsuario = Param(Model.j, initialize={'d1': 60, 'd2': 120})
+
+Model.demandaKernel = Param(Model.j, initialize={'d1': 100, 'd2': 90})
+
+Model.costo = Param(Model.i, Model.j, initialize={('o1', 'd1'): 300, ('o1', 'd2'): 500,('o2', 'd1'): 200, ('o2', 'd2'): 300,('o3', 'd1'): 600, ('o3', 'd2'): 300})
 
 # VARIABLES****************************************************************************
-Model.x = Var(N,N, domain=Binary)
+Model.x = Var(Model.i, Model.j, domain=NonNegativeIntegers)
+Model.y = Var(Model.i, Model.j, domain=NonNegativeIntegers)
 
 # OBJECTIVE FUNCTION*******************************************************************
-Model.obj = Objective(expr = sum(Model.x[i,j]*cost[i,j] for i in N for j in N))
+Model.obj = Objective(expr=sum(Model.costo[i, j] * (Model.x[i, j] + Model.y[i, j]) for i in Model.i for j in Model.j), sense=minimize)
 
 # CONSTRAINTS**************************************************************************
-def source_rule(Model,i):
-    if i==1:
-        return sum(Model.x[i,j] for j in N)==1
-    else:
-        return Constraint.Skip
+def ofertaKernel_rule(Model, i):
+    return sum(Model.x[i, j] for j in Model.j) == Model.ofertaKernel[i]
+Model.ofertaKernel_con = Constraint(Model.i, rule=ofertaKernel_rule)
 
-Model.source=Constraint(N, rule=source_rule)
+def demandaKernel_rule(Model, j):
+    return sum(Model.x[i, j] for i in Model.i) == Model.demandaKernel[j]
+Model.demandaKernel_con = Constraint(Model.j, rule=demandaKernel_rule)
 
-def destination_rule(Model,j):
-    if j==5:
-        return sum(Model.x[i,j] for i in N)==1
-    else:
-        return Constraint.Skip
+def ofertaUsuario_rule(Model, i):
+    return sum(Model.y[i, j] for j in Model.j) == Model.ofertaUsuario[i]
+Model.ofertaUsuario_con = Constraint(Model.i, rule=ofertaUsuario_rule)
 
-Model.destination=Constraint(N, rule=destination_rule)
+def demandaUsuario_rule(Model, j):
+    return sum(Model.y[i, j] for i in Model.i) == Model.demandaUsuario[j]
+Model.demandaUsuario_con = Constraint(Model.j, rule=demandaUsuario_rule)
 
-def intermediate_rule(Model,i):
-    if i!=1 and i!=5:
-        return sum(Model.x[i,j] for j in N) - sum(Model.x[j,i] for j in N)==0
-    else:
-        return Constraint.Skip
-
-Model.intermediate=Constraint(N, rule=intermediate_rule)
-    
 # APPLYING THE SOLVER******************************************************************
 SolverFactory('glpk').solve(Model)
 
 Model.display()
-
-
-
