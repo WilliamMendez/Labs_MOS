@@ -3,24 +3,30 @@ from pyomo.opt import SolverFactory
 import matplotlib.pyplot as plt
 import networkx as nx
 
+from datetime import datetime
+
 """
 *************************************************************************
 ***      Proyecto                                                     ***
 *************************************************************************
 """
 
-
+print("*************************************************************************")
+print("Creando el modelo...")
 Model = ConcreteModel()
 
 # SETS & PARAMETERS********************************************************************
-nPancakes = 4
-start = '2431'
+nPancakes = 6
+print("Número de pancakes:", nPancakes)
+
+start = '526431'
 end = ''.join([str(i) for i in range(1, nPancakes+1)])
 
 Model.start = start
 Model.end = end
 
 def permutations(n, k):
+    time = datetime.now()
     result = []
     def dfs(path):
         if len(path) == k:
@@ -30,6 +36,7 @@ def permutations(n, k):
             if str(i) not in path:
                 dfs(path + [str(i)])
     dfs([])
+    print("Tiempo para las permutaciones:", datetime.now() - time)
     return result
 
 nodes = permutations(nPancakes, nPancakes)
@@ -50,16 +57,19 @@ edges = {(i, j): 999 for i in nodes for j in nodes}
 path = {}
 
 def calculate_edges(nodes: list, size: int, edges: dict):
+    time = datetime.now()
     for node in nodes:
         for i in range(1, size+1):
             actual = flip(node, i)
             edges[(node, actual)] = 1
             path[(node, actual)] = i
+    print("Tiempo para calcular los edges:", datetime.now() - time)
     return edges
 
 calculate_edges(nodes, nPancakes, edges)
 # print(len(edges))
 
+time = datetime.now()
 Model.i = Set(initialize=nodes)
 Model.j = Set(initialize=nodes)
 
@@ -107,11 +117,19 @@ def non_repeated_edge_rule(Model,i,j):
         return Constraint.Skip
 Model.non_repeated_edge = Constraint(Model.i, Model.j, rule=non_repeated_edge_rule)
 
-# APPLYING THE SOLVER******************************************************************
-SolverFactory('glpk').solve(Model)
+print("Tiempos para crear el modelo:", datetime.now() - time)
 
+# APPLYING THE SOLVER******************************************************************
+print("Resolviendo el modelo...")
+time = datetime.now()
+SolverFactory('glpk').solve(Model)
+print("Tiempo para resolver el modelo:", datetime.now() - time)
+
+# PRINTING THE SOLUTION***************************************************************
+print("Solucion: ")
 Model.obj.display()
 
+time = datetime.now()
 G = nx.DiGraph()
 G.add_nodes_from(nodes)
 for edge in Model.edges:
@@ -137,6 +155,9 @@ print("Número de flips por cada tamaño de pila: ")
 for i in range(1, nPancakes+1):
     print(" - ", i, ": ", nFlips[i])
 
+print("Tiempo para mostrar la solución:", datetime.now() - time)
+time = datetime.now()
+
 pos = nx.spring_layout(G)
 pos = nx.circular_layout(G)
 pos = nx.kamada_kawai_layout(G)
@@ -152,6 +173,8 @@ nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10, font
 nx.draw_networkx_nodes(G2, pos, node_size=700)
 nx.draw_networkx_edges(G2, pos, width=3, alpha=1, edge_color='red', connectionstyle='arc3, rad = 0.1')
 nx.draw_networkx_labels(G2, pos, font_size=10, font_family='sans-serif')
+
+print("Tiempo para mostrar el grafo:", datetime.now() - time)
 
 plt.axis('off')
 plt.show()
