@@ -19,7 +19,7 @@ Model = ConcreteModel()
 nPancakes = 6
 print("Número de pancakes:", nPancakes)
 
-start = '526431'
+start = '625431'
 end = ''.join([str(i) for i in range(1, nPancakes+1)])
 
 Model.start = start
@@ -158,8 +158,9 @@ for i in range(1, nPancakes+1):
 print("Tiempo para mostrar la solución:", datetime.now() - time)
 time = datetime.now()
 
-pos = nx.spring_layout(G)
-pos = nx.circular_layout(G)
+plt.figure(figsize=(10, 10))
+pos = nx.spring_layout(G, k=0.5, iterations=20)
+# pos = nx.circular_layout(G, scale=4)
 pos = nx.kamada_kawai_layout(G)
 
 nx.draw_networkx_nodes(G, pos, node_size=700)

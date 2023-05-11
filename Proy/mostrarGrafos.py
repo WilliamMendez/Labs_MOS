@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-size = 3
+size = 6
 
 def permutations(n, k):
     result = []
@@ -16,7 +16,7 @@ def permutations(n, k):
     dfs([])
     return result
 
-print(permutations(size, size))
+# print(permutations(size, size))
 
 def permutations_dict(n, k):
     result = {}
@@ -59,7 +59,7 @@ def calculate_edges(nodes: dict, size: int):
     return nodes
 
 nodes = calculate_edges(nodes, size)
-print(nodes)
+# print(nodes)
 
 
 def create_graph(nodes: dict):
@@ -95,6 +95,7 @@ def create_adjacency_list(nodes: dict):
 adjacency_list = create_adjacency_list(nodes)
 # print(adjacency_list)
 
+file = open("adjacency_list.txt", "w")
 def show_adjacency_matrix(nodes: dict):
     matrix = ""
     firstRow = "\t".join(nodes.keys())
@@ -107,6 +108,7 @@ def show_adjacency_matrix(nodes: dict):
             else:
                 matrix += "0\t"
         matrix += "\n"
+    file.write(matrix)
     print(matrix)
 
 
