@@ -19,7 +19,8 @@ Model = ConcreteModel()
 nPancakes = 6
 print("Número de pancakes:", nPancakes)
 
-start = '625431'
+# start = '231'
+start = '526431'
 end = ''.join([str(i) for i in range(1, nPancakes+1)])
 
 Model.start = start
@@ -176,6 +177,33 @@ nx.draw_networkx_edges(G2, pos, width=3, alpha=1, edge_color='red', connectionst
 nx.draw_networkx_labels(G2, pos, font_size=10, font_family='sans-serif')
 
 print("Tiempo para mostrar el grafo:", datetime.now() - time)
+
+plt.axis('off')
+plt.show()
+
+
+# show the graph but only with the solution path
+plt.figure(figsize=(10, 10))
+
+g3 = nx.DiGraph()
+for edge in resultPath:
+    g3.add_edge(edge[0], edge[1])
+
+pos = nx.spring_layout(g3, k=0.5, iterations=20)
+# pos = nx.circular_layout(G, scale=4)
+pos = nx.kamada_kawai_layout(g3)
+
+nx.draw_networkx_nodes(g3, pos, node_size=700)
+nx.draw_networkx_edges(g3, pos, width=3, alpha=0.2, edge_color='black', connectionstyle='arc3, rad = 0.1')
+nx.draw_networkx_labels(g3, pos, font_size=10, font_family='sans-serif')
+
+# plot the edge labels the weights found in the path dictionary
+edge_labels = {(i, j): path[(i, j)] for i, j in g3.edges()}
+nx.draw_networkx_edge_labels(g3, pos, edge_labels=edge_labels, font_size=10, font_family='sans-serif')
+
+# nx.draw_networkx_nodes(G2, pos, node_size=700)
+# nx.draw_networkx_edges(G2, pos, width=3, alpha=1, edge_color='red', connectionstyle='arc3, rad = 0.1')
+# nx.draw_networkx_labels(G2, pos, font_size=10, font_family='sans-serif')
 
 plt.axis('off')
 plt.show()

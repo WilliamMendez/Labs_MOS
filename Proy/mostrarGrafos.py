@@ -84,6 +84,28 @@ def show_graph(nodes: dict):
 
 # show_graph(nodes)
 
+
+def showGraphV2(G, path):
+    # shows the graph and a copy of the graph that represents the path in red
+    pos = nx.spring_layout(G)
+    nx.draw_networkx_nodes(G, pos)
+    nx.draw_networkx_edges(G, pos)
+    nx.draw_networkx_labels(G, pos)
+    # show the weights
+    labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+
+    G2 = G.copy()
+
+
+
+    plt.axis('off')
+    plt.show
+
+path = [('265431', '345621'),('345621', '654321'),('625431', '265431'),('654321', '123456')]
+
+showGraphV2(graph, path)
+
 def create_adjacency_list(nodes: dict):
     adjacency_list = {}
     for node in nodes:
