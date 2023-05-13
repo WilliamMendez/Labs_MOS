@@ -1,6 +1,8 @@
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 import matplotlib.pyplot as plt
+# Para visualizar los grafos se debe ejecutar el comando:
+# pip install networkx
 import networkx as nx
 
 from datetime import datetime
