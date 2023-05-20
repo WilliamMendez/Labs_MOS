@@ -60,7 +60,7 @@ destinationNode(j)$(ord(j) = 5)  ..  sum((i), x(i,j)) =e= 1;
 intermediateNode(i)$(ord(i) <> 1 and ord(i) ne 5)
 ..  sum((j), x(i,j)) - sum((j), x(j,i)) =e= 0;
 
-f1constraint                    ..  f1 =l= 2;
+f1constraint                    ..  f1 =l= 5;
 
 Model model1 /all/ ;
 
