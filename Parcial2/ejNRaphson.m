@@ -42,7 +42,7 @@ y_coor=double(subs(f_x,x_i_new));
 
 plot(x_i_new,y_coor,'o')
 str2 = num2str(y_coor);
-if d2_f_x_i <0/
+if d2_f_x_i <0
     text(x_i_new -0.3,y_coor+30,['maximo ',str2])
 else
     text(x_i_new -0.3,y_coor-30,['minimo ',str2])
