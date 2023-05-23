@@ -103,16 +103,17 @@ plot_restricciones_verticeS_puntos(vertices, feasible_intersection_points)
 vertices = np.vstack((vertices, feasible_intersection_points))
 print(vertices)
 
-def simplex_woodcarve(vertices):
-    # Buscamos los vectores adyacentes a cada vertice y los guardamos en un diccionario donde la llave es el vertice y el valor es una lista de los vectores adyacentes
-    adyacentes = {}
-    
-    # Asignamos los vectores adyacentes a cada vertice manualmente
-    adyacentes[tuple(vertices[0])] = [tuple(vertices[1]), tuple(vertices[2])]
-    adyacentes[tuple(vertices[1])] = [tuple(vertices[0]), tuple(vertices[3])]
-    adyacentes[tuple(vertices[2])] = [tuple(vertices[0]), tuple(vertices[4])]
-    adyacentes[tuple(vertices[3])] = [tuple(vertices[1]), tuple(vertices[4])]
-    adyacentes[tuple(vertices[4])] = [tuple(vertices[2]), tuple(vertices[3])]
+# Buscamos los vectores adyacentes a cada vertice y los guardamos en un diccionario donde la llave es el vertice y el valor es una lista de los vectores adyacentes
+adyacentes = {}
+
+# Asignamos los vectores adyacentes a cada vertice manualmente
+adyacentes[tuple(vertices[0])] = [tuple(vertices[1]), tuple(vertices[2])]
+adyacentes[tuple(vertices[1])] = [tuple(vertices[0]), tuple(vertices[3])]
+adyacentes[tuple(vertices[2])] = [tuple(vertices[0]), tuple(vertices[4])]
+adyacentes[tuple(vertices[3])] = [tuple(vertices[1]), tuple(vertices[4])]
+adyacentes[tuple(vertices[4])] = [tuple(vertices[2]), tuple(vertices[3])]
+
+def simplex_woodcarve(vertices, adyacentes):
     
     # Ahora calculamos el valor de la funcion objetivo para cada vertice
     valores = {}
@@ -151,6 +152,6 @@ def simplex_woodcarve(vertices):
 
     return FEV
 
-vertice_optimo = simplex_woodcarve(vertices)
+vertice_optimo = simplex_woodcarve(vertices, adyacentes)
 
 
