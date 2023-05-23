@@ -41,8 +41,8 @@ while abs(grad_z_i) > epsilon
     %display(z_i1)
     plot3([x_i,x_i1],[y_i,y_i1],[z_i,z_i1],'b-o');
 
-    x_i = x_i1;
-    y_i = y_i1;
+    x_i = x_i1
+    y_i = y_i1
     grad_z_i = subs(subs(grad_z,x,x_i),y, y_i);
 end
 
