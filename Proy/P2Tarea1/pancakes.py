@@ -10,14 +10,13 @@ def flip(s, k):
 
 def pancakes(arr):
     print(arr)
-    print("\n")
     flips = []
     n = len(arr)
     while n > 0:
         max_index = arr.index(n)
         if max_index != n-1: # si no está en su lugar toca moverlo
             if max_index!=0: # si no está en la primera posición toca ponerlo en la primera para luego ponerlo en la última
-                print("flip en", max_index+1)
+                print("flip en", max_index+1, "para poner", n, "en la primera posición")
                 flips.append(max_index+1)
                 arr = flip(arr, max_index+1)
                 print(arr)
@@ -30,6 +29,7 @@ def pancakes(arr):
 
         for i in range(n, 0, -1): # se buscan los siguientes elementos para saber si están ordenados
             if arr[n-1] == n:
+                print(n, "está ordenado")
                 n-=1
             else:
                 break
@@ -40,15 +40,10 @@ def pancakes(arr):
 def main():
     arr = [int(i) for i in list(input("Ingrese el estado inicial: "))]
     flips = pancakes(arr)
-    if flips:
-        flips = [str(x) for x in flips]
-        print(" ".join(flips))
-        print("# de flips en cada posición: ")
-        for i in range(1, len(arr)+1):
-            print(i, ":", flips.count(str(i)))
 
-    else:
-        print("ORDENADO")
+    print("# de flips en cada posición: ")
+    for i in range(1, len(arr)+1):
+        print(i, ":", flips.count(i))
 
 
 main()
