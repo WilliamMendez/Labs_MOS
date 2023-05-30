@@ -8,13 +8,13 @@ def flip(arr, k):
 
 def pancakes(arr):
     flips = []
-    n = len(arr) # n = tamaño del arreglo
-    l = n # l = tamaño del arreglo
+    n = len(arr)
+    l = n
     while n > 0:
 
-        max_index = arr.index(n) # max_index = indice del valor maximo
-        if max_index != 0: # Si el valor maximo no esta en la primera posicion
-            if max_index!=len(arr)-1: # Si el valor maximo no esta en la ultima posicion
+        max_index = arr.index(n)
+        if max_index != 0:
+            if max_index!=len(arr)-1:
                 arr = flip(arr, max_index)
                 flips.append(max_index)
             arr = flip(arr, len(arr)-n)
