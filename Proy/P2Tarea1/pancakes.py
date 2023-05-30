@@ -1,3 +1,6 @@
+from datetime import datetime
+
+time = datetime.now()
 
 def flip(s, k):
     if k == 1:
@@ -49,3 +52,5 @@ def main():
 
 
 main()
+
+print("Tiempo total:", datetime.now() - time)
