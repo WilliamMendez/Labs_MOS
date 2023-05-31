@@ -38,7 +38,7 @@ def pancakes(arr):
 
 
 def main():
-    arr = [int(i) for i in list(input("Ingrese el estado inicial: "))]
+    arr = [5, 2, 6, 4, 3, 1]
     flips = pancakes(arr)
 
     print("# de flips en cada posición: ")
