@@ -107,6 +107,11 @@ while length(evtQueue)>0
     %pause(1);
 end
 
-
+figure
+plot(vec_t,vec_porcLlamAcep, '-o')
+title('Desempeño del Callcenter');
+xlabel('Tiempo [min]');
+ylabel('% de aceptación de llamadas');
+ylim([0 110])
 
 
